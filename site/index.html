@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <meta
+      name="description"
+      content="always 项目的静态介绍站，包含后端 Docker 部署教程、Android 展示与下载入口，以及项目思考记录。"
+    />
+    <title>always | Android + Docker Deployment Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="aurora aurora-one"></div>
+      <div class="aurora aurora-two"></div>
+      <header class="hero">
+        <nav class="topbar">
+          <a class="brand" href="#top">
+            <span class="brand-mark">A</span>
+            <span class="brand-text">always</span>
+          </a>
+          <div class="topbar-links">
+            <a href="#deploy">部署</a>
+            <a href="#android">Android</a>
+            <a href="#notes">Notes</a>
+            <a href="#docs">Docs</a>
+          </div>
+        </nav>
+
+        <div class="hero-grid" id="top">
+          <section class="hero-copy">
+            <p class="eyebrow">ANDROID-ONLY RELATIONSHIP SHARING APP</p>
+            <h1>
+              把产品介绍、Docker 教程、
+              <span>Android 下载与展示</span>
+              放进一个真正能对外展示的项目主页。
+            </h1>
+            <p class="hero-description">
+              这是 `always` 的 GitHub Pages 展示站。它既是一个带设计感的项目首页，
+              也是一份对协作者和测试者真正有用的操作手册：怎么拉镜像、怎么起容器、
+              怎么连 PostgreSQL、怎么跑 Android、以及为什么我们做这些设计。
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#deploy">开始部署</a>
+              <a class="button button-secondary" href="#docs">查看文档索引</a>
+            </div>
+            <ul class="hero-points">
+              <li>GitHub Pages 静态站点，面向所有人公开访问</li>
+              <li>后端 Docker 教程、本地数据库方案、Compose 方案一站式说明</li>
+              <li>Android 展示、下载入口、项目碎碎念都可以持续追加</li>
+            </ul>
+          </section>
+
+          <aside class="hero-panel">
+            <div class="glass-card status-card">
+              <p class="panel-label">Release Snapshot</p>
+              <div class="metric-row">
+                <div>
+                  <span class="metric-value">Docker Hub</span>
+                  <span class="metric-label">xanxushu/always-backend</span>
+                </div>
+                <div>
+                  <span class="metric-value">Android</span>
+                  <span class="metric-label">真机已验证</span>
+                </div>
+              </div>
+              <div class="pill-row">
+                <span class="pill">GitHub Pages Ready</span>
+                <span class="pill">Dockerized Backend</span>
+                <span class="pill">Docs in CN/EN</span>
+              </div>
+              <pre class="code-snippet"><code>docker pull xanxushu/always-backend:latest
+docker compose up -d
+# Android:
+http://10.0.2.2:3000/</code></pre>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <main>
+        <section class="section feature-section">
+          <div class="section-heading">
+            <p class="eyebrow">WHY THIS PAGE EXISTS</p>
+            <h2>不是“文档堆砌”，而是一页能打的项目介绍站</h2>
+          </div>
+          <div class="feature-grid">
+            <article class="feature-card">
+              <span class="feature-index">01</span>
+              <h3>面向外部协作者</h3>
+              <p>
+                别人第一次接触项目时，不需要先翻 README、再翻 docs、再猜环境变量。
+                打开页面就能知道这是什么、怎么跑、去哪下载。
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-index">02</span>
+              <h3>兼顾展示与操作</h3>
+              <p>
+                它既要有项目气质，也要能直接复制命令。页面既展示 Android
+                产品氛围，也落地到 Docker、Compose、PostgreSQL 的真实教程。
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-index">03</span>
+              <h3>持续补充你的声音</h3>
+              <p>
+                这页以后可以继续写你的想法、设计偏好、路线判断、碎碎念。它不只是冷冰冰的说明书，
+                也是项目本人的“门面”。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section deploy-section" id="deploy">
+          <div class="section-heading">
+            <p class="eyebrow">DEPLOYMENT PATHS</p>
+            <h2>三种后端启动方式，按使用场景选</h2>
+          </div>
+
+          <div class="deploy-grid">
+            <article class="deploy-card deploy-card-primary">
+              <div class="card-head">
+                <span class="badge">Recommended</span>
+                <h3>方式 A: 本机 PostgreSQL + Docker 后端容器</h3>
+              </div>
+              <p>
+                最适合你自己开发和快速联调。数据库继续放在本机，
+                后端通过 Docker 保持环境统一。
+              </p>
+              <pre><code>docker pull xanxushu/always-backend:latest
+
+docker run --rm -p 3000:3000 ^
+  -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/always" ^
+  -e JWT_ACCESS_SECRET="your-access-secret" ^
+  -e JWT_REFRESH_SECRET="your-refresh-secret" ^
+  xanxushu/always-backend:latest</code></pre>
+              <ul class="inline-list">
+                <li>最快</li>
+                <li>最适合单机开发</li>
+                <li>真机和模拟器都方便测试</li>
+              </ul>
+            </article>
+
+            <article class="deploy-card">
+              <div class="card-head">
+                <span class="badge badge-muted">Shareable</span>
+                <h3>方式 B: Docker Compose 同时启动 backend + postgres</h3>
+              </div>
+              <p>
+                适合分享给同事、测试同学或者异地机器。整个栈一起起，
+                最不容易遗漏依赖和网络配置。
+              </p>
+              <pre><code>cd always_backend
+docker compose up -d
+
+# or force Docker Hub image
+$env:ALWAYS_BACKEND_IMAGE="xanxushu/always-backend:latest"
+docker compose pull backend
+docker compose up -d</code></pre>
+              <ul class="inline-list">
+                <li>最适合协作</li>
+                <li>数据库卷持久化</li>
+                <li>部署和迁移路径清晰</li>
+              </ul>
+            </article>
+
+            <article class="deploy-card">
+              <div class="card-head">
+                <span class="badge badge-muted">Explicit</span>
+                <h3>方式 C: 两个独立容器 + 自定义 Docker 网络</h3>
+              </div>
+              <p>
+                适合你想更细地理解 Docker 网络，或者希望单独控制 PostgreSQL 与 backend
+                生命周期的时候。
+              </p>
+              <pre><code>docker network create always-network
+
+docker run -d --name always-postgres ^
+  --network always-network ^
+  -e POSTGRES_DB=always ^
+  -e POSTGRES_USER=postgres ^
+  -e POSTGRES_PASSWORD=postgres ^
+  postgres:16-bookworm
+
+docker run -d --name always-backend ^
+  --network always-network ^
+  -p 3000:3000 ^
+  -e DATABASE_URL="postgresql://postgres:postgres@always-postgres:5432/always" ^
+  -e JWT_ACCESS_SECRET="your-access-secret" ^
+  -e JWT_REFRESH_SECRET="your-refresh-secret" ^
+  xanxushu/always-backend:latest</code></pre>
+              <ul class="inline-list">
+                <li>控制最细</li>
+                <li>适合排查网络</li>
+                <li>更接近生产拆分思路</li>
+              </ul>
+            </article>
+          </div>
+        </section>
+
+        <section class="section steps-section">
+          <div class="section-heading">
+            <p class="eyebrow">HOW TO RUN</p>
+            <h2>从拉镜像到真机联调的实际流程</h2>
+          </div>
+
+          <div class="timeline">
+            <article class="timeline-item">
+              <span class="timeline-index">1</span>
+              <div>
+                <h3>拉取镜像</h3>
+                <p>使用 `docker pull xanxushu/always-backend:latest` 拉取后端镜像。</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <span class="timeline-index">2</span>
+              <div>
+                <h3>准备数据库</h3>
+                <p>可以选择本机 PostgreSQL、Compose 内 PostgreSQL，或者独立数据库容器。</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <span class="timeline-index">3</span>
+              <div>
+                <h3>传入环境变量</h3>
+                <p>至少要有 `DATABASE_URL`、`JWT_ACCESS_SECRET`、`JWT_REFRESH_SECRET`。变量多时建议用 `--env-file`。</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <span class="timeline-index">4</span>
+              <div>
+                <h3>启动容器并看日志</h3>
+                <p>用 `docker ps` 和 `docker logs` 确认后端已经监听到 `3000` 端口。</p>
+              </div>
+            </article>
+            <article class="timeline-item">
+              <span class="timeline-index">5</span>
+              <div>
+                <h3>连接 Android</h3>
+                <p>模拟器一般用 `10.0.2.2:3000`，真机用电脑局域网 IP，例如 `192.168.x.x:3000`。</p>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section android-section" id="android">
+          <div class="section-heading">
+            <p class="eyebrow">ANDROID</p>
+            <h2>Android 展示、下载入口、测试说明</h2>
+          </div>
+
+          <div class="android-grid">
+            <article class="phone-stage">
+              <div class="phone-frame">
+                <div class="phone-notch"></div>
+                <div class="phone-screen">
+                  <div class="mock-status">always</div>
+                  <div class="mock-card mock-card-large">
+                    <span>Relationship Sharing</span>
+                    <strong>Consent-first</strong>
+                    <p>status · location requests · timeline · summaries</p>
+                  </div>
+                  <div class="mock-row">
+                    <div class="mock-card">
+                      <span>Invite</span>
+                      <strong>Partner flow</strong>
+                    </div>
+                    <div class="mock-card">
+                      <span>Safety</span>
+                      <strong>Revocable access</strong>
+                    </div>
+                  </div>
+                  <div class="mock-card mock-footer">
+                    <span>Backend</span>
+                    <strong>Dockerized · GitHub Pages ready</strong>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="android-copy">
+              <div class="glass-card">
+                <h3>Android 下载位</h3>
+                <p>
+                  这里已经留出了给 APK、GitHub Release 或应用说明的入口。你后面只需要替换链接，
+                  不需要再改页面结构。
+                </p>
+                <div class="button-row">
+                  <a class="button button-primary" href="#" data-download-link>APK Download</a>
+                  <a class="button button-secondary" href="/D:/code/always/always_Android/README.md">Android Docs</a>
+                </div>
+                <p class="meta-note">
+                  现在默认下载按钮是占位入口，等你有正式 APK 或 Release 链接后可以直接替换。
+                </p>
+              </div>
+              <div class="glass-card checklist-card">
+                <h3>联调提示</h3>
+                <ul class="check-list">
+                  <li>模拟器优先使用 `http://10.0.2.2:3000/`</li>
+                  <li>真机使用电脑局域网 IP，不要填 `localhost`</li>
+                  <li>确认防火墙已放行 `3000` 端口</li>
+                  <li>确认 Docker 已发布 `-p 3000:3000`</li>
+                </ul>
+              </div>
+            </article>
+          </div>
+        </section>
+
+        <section class="section notes-section" id="notes">
+          <div class="section-heading">
+            <p class="eyebrow">NOTES & THOUGHTS</p>
+            <h2>你的看法、路线判断和碎碎念，也应该是页面的一部分</h2>
+          </div>
+
+          <div class="notes-grid">
+            <article class="note-card">
+              <p class="note-tag">Viewpoint</p>
+              <h3>为什么要做 GitHub Pages</h3>
+              <p>
+                因为 README 更像仓库内部说明，而公开页面更像一个对外窗口。
+                它能让第一次来到项目的人更快建立信任，也更容易理解“这个项目已经到哪一步了”。
+              </p>
+            </article>
+            <article class="note-card">
+              <p class="note-tag">Product</p>
+              <h3>为什么页面不只放技术教程</h3>
+              <p>
+                一个好的项目主页应该既能讲清部署，也能讲清气质。
+                Android 展示、设计想法、取舍判断，本来就属于项目说明的一部分。
+              </p>
+            </article>
+            <article class="note-card">
+              <p class="note-tag">Future</p>
+              <h3>以后还能继续加什么</h3>
+              <p>
+                你后面完全可以继续加 Release Timeline、APK 更新记录、功能演示截图、
+                Roadmap、更新日志，甚至写一整段“我为什么想做这个产品”。
+              </p>
+            </article>
+          </div>
+        </section>
+
+        <section class="section docs-section" id="docs">
+          <div class="section-heading">
+            <p class="eyebrow">DOCS INDEX</p>
+            <h2>文档入口</h2>
+          </div>
+
+          <div class="docs-grid">
+            <a class="doc-card" href="/D:/code/always/always_backend/README.zh-CN.md">
+              <h3>后端部署文档（中文）</h3>
+              <p>镜像拉取、容器创建、本机 PostgreSQL、Compose 和常见问题。</p>
+            </a>
+            <a class="doc-card" href="/D:/code/always/always_backend/README.en.md">
+              <h3>Backend Deployment Docs (EN)</h3>
+              <p>Docker image usage, PostgreSQL integration, compose flow, troubleshooting.</p>
+            </a>
+            <a class="doc-card" href="/D:/code/always/docs/system-architecture.md">
+              <h3>System Architecture</h3>
+              <p>项目架构、边界、核心服务设计说明。</p>
+            </a>
+            <a class="doc-card" href="/D:/code/always/docs/security-and-privacy.md">
+              <h3>Security & Privacy</h3>
+              <p>安全、隐私、反滥用与产品边界。</p>
+            </a>
+            <a class="doc-card" href="/D:/code/always/docs/product-prd.md">
+              <h3>Product PRD</h3>
+              <p>产品目标、范围、关键能力和阶段规划。</p>
+            </a>
+            <a class="doc-card" href="/D:/code/always/always_Android/README.md">
+              <h3>Android Readme</h3>
+              <p>Android 端构建、调试、联调基础说明。</p>
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <p>Built for GitHub Pages · designed as a living project front page for always.</p>
+    </footer>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
