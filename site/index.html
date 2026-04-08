@@ -10,7 +10,7 @@
       name="description"
       content="always 项目的静态介绍站，包含后端 Docker 部署教程、Android 展示与下载入口，以及项目思考记录。"
     />
-    <title>always | Android + Docker Deployment Guide</title>
+    <title>always</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -32,8 +32,7 @@
           <div class="topbar-links">
             <a href="#deploy">部署</a>
             <a href="#android">Android</a>
-            <a href="#notes">Notes</a>
-            <a href="#docs">Docs</a>
+            <a href="#notes">碎碎念</a>
           </div>
         </nav>
 
@@ -41,17 +40,17 @@
           <section class="hero-copy">
             <p class="eyebrow">A SOLUTION FOR RELATIONSHIP SHARING</p>
             <h1>
-              人们习惯说谎
+              人们习惯说谎<br>
               <span>可我想要真相</span>
             </h1>
             <p class="hero-description">
-               `always` -- 我与你同在，
+              always -- 我与你同在，
               当我们没办法给彼此信任时、
               也许可以借助些什么来让彼此安心。
             </p>
             <div class="hero-actions">
               <a class="button button-primary" href="#deploy">开始部署</a>
-              <a class="button button-secondary" href="#docs">查看文档索引</a>
+              <a class="button button-secondary" href="#android">Android客户端</a>
             </div>
           </section>
 
@@ -73,6 +72,8 @@
                 <span class="pill">状态快照</span>
                 <span class="pill">定位申请</span>
                 <span class="pill">通知镜像</span>
+                <span class="pill">关系总结</span>
+                <span class="pill">权限管理</span>
               </div>
               <pre class="code-snippet"><code>docker pull xanxushu/always-backend:latest</code></pre>
             </div>
@@ -83,8 +84,8 @@
       <main>
         <section class="section feature-section">
           <div class="section-heading">
-            <p class="eyebrow">项目概览</p>
-            <h2>一款远程同步两台手机各项信息的解决方案</h2>
+            <p class="eyebrow">INTRODUCTION</p>
+            <h2>一款同步两台Android设备各项状态的解决方案</h2>
           </div>
           <div class="feature-grid">
             <article class="feature-card">
@@ -111,13 +112,34 @@
                 通过服务端同步到相关联的设备。
               </p>
             </article>
+            <article class="feature-card">
+              <span class="feature-index">04</span>
+              <h3>关系总结</h3>
+              <p>
+                提供详细的关系状态报告，帮助用户更好地了解和管理他们的关系。
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-index">05</span>
+              <h3>通知镜像</h3>
+              <p>
+                通过服务端同步通知状态，让用户在任何设备上都能及时了解对方的动态。
+              </p>
+            </article>
+            <article class="feature-card">
+              <span class="feature-index">06</span>
+              <h3>权限管理</h3>
+              <p>
+                提供灵活的权限控制机制，确保用户数据的安全性和隐私性。
+              </p>
+            </article>
           </div>
         </section>
 
         <section class="section deploy-section" id="deploy">
           <div class="section-heading">
             <p class="eyebrow">DEPLOYMENT PATHS</p>
-            <h2>三种后端启动方式，按使用场景选</h2>
+            <h2>两种后端启动方式，按使用场景选</h2>
           </div>
 
           <div class="deploy-grid">
@@ -131,12 +153,12 @@
                 后端通过 Docker 保持环境统一。
               </p>
               <pre><code>docker pull xanxushu/always-backend:latest
-
-docker run --rm -p 3000:3000 ^
-  -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/always" ^
-  -e JWT_ACCESS_SECRET="your-access-secret" ^
-  -e JWT_REFRESH_SECRET="your-refresh-secret" ^
-  xanxushu/always-backend:latest</code></pre>
+              
+              docker run --rm -p 3000:3000 ^
+                -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/always" ^
+                -e JWT_ACCESS_SECRET="your-access-secret" ^
+                -e JWT_REFRESH_SECRET="your-refresh-secret" ^
+                xanxushu/always-backend:latest</code></pre>
               <ul class="inline-list">
                 <li>最快</li>
                 <li>最适合单机开发</li>
@@ -153,49 +175,43 @@ docker run --rm -p 3000:3000 ^
                 适合分享给同事、测试同学或者异地机器。整个栈一起起，
                 最不容易遗漏依赖和网络配置。
               </p>
-              <pre><code>cd always_backend
-docker compose up -d
-
-# or force Docker Hub image
-$env:ALWAYS_BACKEND_IMAGE="xanxushu/always-backend:latest"
-docker compose pull backend
-docker compose up -d</code></pre>
+              <pre><code>
+                            # 在项目根目录下创建 docker-compose.yml，内容如下：
+                            services:
+                              postgres:
+                                image: postgres:16-bookworm
+                                restart: unless-stopped
+                                environment:
+                                  POSTGRES_DB: always
+                                  POSTGRES_USER: postgres
+                                  POSTGRES_PASSWORD: postgres
+                                ports:
+                                  - '5432:5432'
+                                volumes:
+                                  - postgres-data:/var/lib/postgresql/data
+                            
+                              backend:
+                                image: xanxushu/always-backend:latest
+                                restart: unless-stopped
+                                depends_on:
+                                  - postgres
+                                env_file:
+                                  - .env.example
+                                environment:
+                                  DATABASE_URL: postgresql://postgres:postgres@postgres:5432/always
+                                  PORT: 3000
+                                ports:
+                                  - '3000:3000'
+                            
+                            volumes:
+                              postgres-data:
+                            # 执行compose命令                
+                            docker compose up -d
+                            </code></pre>
               <ul class="inline-list">
                 <li>最适合协作</li>
                 <li>数据库卷持久化</li>
                 <li>部署和迁移路径清晰</li>
-              </ul>
-            </article>
-
-            <article class="deploy-card">
-              <div class="card-head">
-                <span class="badge badge-muted">Explicit</span>
-                <h3>方式 C: 两个独立容器 + 自定义 Docker 网络</h3>
-              </div>
-              <p>
-                适合你想更细地理解 Docker 网络，或者希望单独控制 PostgreSQL 与 backend
-                生命周期的时候。
-              </p>
-              <pre><code>docker network create always-network
-
-docker run -d --name always-postgres ^
-  --network always-network ^
-  -e POSTGRES_DB=always ^
-  -e POSTGRES_USER=postgres ^
-  -e POSTGRES_PASSWORD=postgres ^
-  postgres:16-bookworm
-
-docker run -d --name always-backend ^
-  --network always-network ^
-  -p 3000:3000 ^
-  -e DATABASE_URL="postgresql://postgres:postgres@always-postgres:5432/always" ^
-  -e JWT_ACCESS_SECRET="your-access-secret" ^
-  -e JWT_REFRESH_SECRET="your-refresh-secret" ^
-  xanxushu/always-backend:latest</code></pre>
-              <ul class="inline-list">
-                <li>控制最细</li>
-                <li>适合排查网络</li>
-                <li>更接近生产拆分思路</li>
               </ul>
             </article>
           </div>
@@ -240,7 +256,7 @@ docker run -d --name always-backend ^
               <span class="timeline-index">5</span>
               <div>
                 <h3>连接 Android</h3>
-                <p>模拟器一般用 `10.0.2.2:3000`，真机用电脑局域网 IP，例如 `192.168.x.x:3000`。</p>
+                <p>真机用电脑局域网 IP，例如：192.168.x.x:3000。</p>
               </div>
             </article>
           </div>
@@ -249,7 +265,7 @@ docker run -d --name always-backend ^
         <section class="section android-section" id="android">
           <div class="section-heading">
             <p class="eyebrow">ANDROID</p>
-            <h2>Android 展示、下载入口、测试说明</h2>
+            <h2>Android 应用说明</h2>
           </div>
 
           <div class="android-grid">
@@ -283,23 +299,20 @@ docker run -d --name always-backend ^
 
             <article class="android-copy">
               <div class="glass-card">
-                <h3>Android 下载位</h3>
+                <h3>Android 下载</h3>
                 <p>
-                  这里已经留出了给 APK、GitHub Release 或应用说明的入口。你后面只需要替换链接，
-                  不需要再改页面结构。
+                  使用Android客户端，配置好后端地址，即可在任意Android设备上使用always。
                 </p>
                 <div class="button-row">
-                  <a class="button button-primary" href="#" data-download-link>APK Download</a>
-                  <a class="button button-secondary" href="/D:/code/always/always_Android/README.md">Android Docs</a>
+                  <a class="button button-primary" href="#" data-download-link>APK 下载</a>
                 </div>
                 <p class="meta-note">
-                  现在默认下载按钮是占位入口，等你有正式 APK 或 Release 链接后可以直接替换。
+                  最佳适用于Android 12+，低版本Android暂未经过测试。
                 </p>
               </div>
               <div class="glass-card checklist-card">
                 <h3>联调提示</h3>
                 <ul class="check-list">
-                  <li>模拟器优先使用 `http://10.0.2.2:3000/`</li>
                   <li>真机使用电脑局域网 IP，不要填 `localhost`</li>
                   <li>确认防火墙已放行 `3000` 端口</li>
                   <li>确认 Docker 已发布 `-p 3000:3000`</li>
@@ -342,45 +355,11 @@ docker run -d --name always-backend ^
             </article>
           </div>
         </section>
-
-        <section class="section docs-section" id="docs">
-          <div class="section-heading">
-            <p class="eyebrow">DOCS INDEX</p>
-            <h2>文档入口</h2>
-          </div>
-
-          <div class="docs-grid">
-            <a class="doc-card" href="/D:/code/always/always_backend/README.zh-CN.md">
-              <h3>后端部署文档（中文）</h3>
-              <p>镜像拉取、容器创建、本机 PostgreSQL、Compose 和常见问题。</p>
-            </a>
-            <a class="doc-card" href="/D:/code/always/always_backend/README.en.md">
-              <h3>Backend Deployment Docs (EN)</h3>
-              <p>Docker image usage, PostgreSQL integration, compose flow, troubleshooting.</p>
-            </a>
-            <a class="doc-card" href="/D:/code/always/docs/system-architecture.md">
-              <h3>System Architecture</h3>
-              <p>项目架构、边界、核心服务设计说明。</p>
-            </a>
-            <a class="doc-card" href="/D:/code/always/docs/security-and-privacy.md">
-              <h3>Security & Privacy</h3>
-              <p>安全、隐私、反滥用与产品边界。</p>
-            </a>
-            <a class="doc-card" href="/D:/code/always/docs/product-prd.md">
-              <h3>Product PRD</h3>
-              <p>产品目标、范围、关键能力和阶段规划。</p>
-            </a>
-            <a class="doc-card" href="/D:/code/always/always_Android/README.md">
-              <h3>Android Readme</h3>
-              <p>Android 端构建、调试、联调基础说明。</p>
-            </a>
-          </div>
-        </section>
       </main>
     </div>
 
     <footer class="footer">
-      <p>Built for GitHub Pages · designed as a living project front page for always.</p>
+      <p>Built by xanxushu · designed as an introductory page for always.</p>
     </footer>
 
     <script type="module" src="./main.js"></script>
