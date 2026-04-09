@@ -153,12 +153,11 @@
                 后端通过 Docker 保持环境统一。
               </p>
               <pre><code>docker pull xanxushu/always-backend:latest
-              
-              docker run --rm -p 3000:3000 ^
-                -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/always" ^
-                -e JWT_ACCESS_SECRET="your-access-secret" ^
-                -e JWT_REFRESH_SECRET="your-refresh-secret" ^
-                xanxushu/always-backend:latest</code></pre>
+docker run --rm -p 3000:3000 ^
+  -e DATABASE_URL="postgresql://postgres:postgres@host.docker.internal:5432/always" ^
+  -e JWT_ACCESS_SECRET="your-access-secret" ^
+  -e JWT_REFRESH_SECRET="your-refresh-secret" ^
+  xanxushu/always-backend:latest</code></pre>
               <ul class="inline-list">
                 <li>最快</li>
                 <li>最适合单机开发</li>
@@ -176,38 +175,37 @@
                 最不容易遗漏依赖和网络配置。
               </p>
               <pre><code>
-                            # 在项目根目录下创建 docker-compose.yml，内容如下：
-                            services:
-                              postgres:
-                                image: postgres:16-bookworm
-                                restart: unless-stopped
-                                environment:
-                                  POSTGRES_DB: always
-                                  POSTGRES_USER: postgres
-                                  POSTGRES_PASSWORD: postgres
-                                ports:
-                                  - '5432:5432'
-                                volumes:
-                                  - postgres-data:/var/lib/postgresql/data
-                            
-                              backend:
-                                image: xanxushu/always-backend:latest
-                                restart: unless-stopped
-                                depends_on:
-                                  - postgres
-                                env_file:
-                                  - .env.example
-                                environment:
-                                  DATABASE_URL: postgresql://postgres:postgres@postgres:5432/always
-                                  PORT: 3000
-                                ports:
-                                  - '3000:3000'
-                            
-                            volumes:
-                              postgres-data:
-                            # 执行compose命令                
-                            docker compose up -d
-                            </code></pre>
+# 在项目根目录下创建 docker-compose.yml，内容如下：
+services:
+  postgres:
+    image: postgres:16-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: always
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  backend:
+    image: xanxushu/always-backend:latest
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    env_file:
+      - .env.example
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/always
+      PORT: 3000
+    ports:
+      - '3000:3000'
+
+volumes:
+  postgres-data:
+# 执行compose命令                
+docker compose up -d</code></pre>
               <ul class="inline-list">
                 <li>最适合协作</li>
                 <li>数据库卷持久化</li>
