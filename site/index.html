@@ -2,13 +2,10 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="always 项目的静态介绍站，包含后端 Docker 部署教程、Android 展示与下载入口，以及项目思考记录。"
+      content="always 项目的静态介绍站，包含后端 Docker 部署、Android 展示、下载入口与项目说明。"
     />
     <title>always</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -23,6 +20,7 @@
     <div class="page-shell">
       <div class="aurora aurora-one"></div>
       <div class="aurora aurora-two"></div>
+
       <header class="hero">
         <nav class="topbar">
           <a class="brand" href="#top">
@@ -32,25 +30,25 @@
           <div class="topbar-links">
             <a href="#deploy">部署</a>
             <a href="#android">Android</a>
-            <a href="#notes">碎碎念</a>
+            <a href="#notes">想法</a>
           </div>
         </nav>
 
         <div class="hero-grid" id="top">
           <section class="hero-copy">
-            <p class="eyebrow">A SOLUTION FOR RELATIONSHIP SHARING</p>
+            <p class="eyebrow">A RELATIONSHIP SHARING EXPERIMENT</p>
             <h1>
-              人们习惯说谎<br>
-              <span>可我想要真相</span>
+              人们习惯说相信<br />
+              <span>可我想要看见真相</span>
             </h1>
             <p class="hero-description">
-              always -- 我与你同在，
-              当我们没办法给彼此信任时、
-              也许可以借助些什么来让彼此安心。
+              always 是一个围绕“关系中的状态共享”展开的实验型产品。
+              你可以自建后端、部署自己的数据库，再用 Android 客户端去连接关系、同步状态、
+              查看通知镜像和关系总结。
             </p>
             <div class="hero-actions">
               <a class="button button-primary" href="#deploy">开始部署</a>
-              <a class="button button-secondary" href="#android">Android客户端</a>
+              <a class="button button-secondary" href="#android">查看 Android</a>
             </div>
           </section>
 
@@ -67,15 +65,16 @@
                   <span class="metric-label">always app</span>
                 </div>
               </div>
-              <div class="pill-row">
+
+              <div class="pill-row" aria-label="feature tags">
                 <span class="pill">关系绑定</span>
                 <span class="pill">状态快照</span>
                 <span class="pill">定位申请</span>
-                <br>
                 <span class="pill">通知镜像</span>
                 <span class="pill">关系总结</span>
                 <span class="pill">权限管理</span>
               </div>
+
               <pre class="code-snippet"><code>docker pull xanxushu/always-backend:latest</code></pre>
             </div>
           </aside>
@@ -86,53 +85,39 @@
         <section class="section feature-section">
           <div class="section-heading">
             <p class="eyebrow">INTRODUCTION</p>
-            <h2>一款同步两台Android设备各项状态的解决方案</h2>
+            <h2>一套围绕关系共享、状态同步与自建部署展开的完整方案</h2>
           </div>
+
           <div class="feature-grid">
             <article class="feature-card">
               <span class="feature-index">01</span>
               <h3>自建部署</h3>
-              <p>
-                通过Docker在任何地方搭建属于自己的服务，
-                数据完全掌握在自己手中。
-              </p>
+              <p>通过 Docker 在任意机器启动后端服务，数据库和环境变量由你自己掌控。</p>
             </article>
             <article class="feature-card">
               <span class="feature-index">02</span>
               <h3>关系绑定</h3>
-              <p>
-                在Android设备上使用APP绑定关系，
-                让两个设备建立联系。
-              </p>
+              <p>以关系为核心串联双方设备，让后续状态、通知和总结都有明确的同步对象。</p>
             </article>
             <article class="feature-card">
               <span class="feature-index">03</span>
               <h3>状态快照</h3>
-              <p>
-                授予软件相应的权限，用以获取设备的各项状态形成快照，
-                通过服务端同步到相关联的设备。
-              </p>
+              <p>采集并同步设备状态，形成可被查看、回溯和总结的状态记录。</p>
             </article>
             <article class="feature-card">
               <span class="feature-index">04</span>
-              <h3>关系总结</h3>
-              <p>
-                提供详细的关系状态报告，帮助用户更好地了解和管理他们的关系。
-              </p>
+              <h3>定位申请</h3>
+              <p>不是默认暴露位置，而是通过请求与授权流转来明确边界和权限。</p>
             </article>
             <article class="feature-card">
               <span class="feature-index">05</span>
               <h3>通知镜像</h3>
-              <p>
-                通过服务端同步通知状态，让用户在任何设备上都能及时了解对方的动态。
-              </p>
+              <p>在授权前提下同步通知摘要，把“最近发生了什么”变成可阅读的信息流。</p>
             </article>
             <article class="feature-card">
               <span class="feature-index">06</span>
-              <h3>权限管理</h3>
-              <p>
-                提供灵活的权限控制机制，确保用户数据的安全性和隐私性。
-              </p>
+              <h3>关系总结</h3>
+              <p>把一段时间内的状态、申请和事件收束成更容易理解的关系概览。</p>
             </article>
           </div>
         </section>
@@ -140,18 +125,18 @@
         <section class="section deploy-section" id="deploy">
           <div class="section-heading">
             <p class="eyebrow">DEPLOYMENT PATHS</p>
-            <h2>两种后端启动方式，按使用场景选</h2>
+            <h2>两种常用启动方式，按你的机器环境和协作方式来选</h2>
           </div>
 
           <div class="deploy-grid">
             <article class="deploy-card deploy-card-primary">
               <div class="card-head">
                 <span class="badge">Recommended</span>
-                <h3>方式 A: 本机 PostgreSQL + Docker 后端容器</h3>
+                <h3>方式 A：本机 PostgreSQL + Docker 后端容器</h3>
               </div>
               <p>
-                最适合你自己开发和快速联调。数据库继续放在本机，
-                后端通过 Docker 保持环境统一。
+                最适合本机开发与快速联调。数据库继续跑在宿主机上，
+                后端镜像通过环境变量连接它，容器启动时会自动执行 migration。
               </p>
               <pre><code>docker pull xanxushu/always-backend:latest
 docker run --rm -p 3000:3000 ^
@@ -160,24 +145,22 @@ docker run --rm -p 3000:3000 ^
   -e JWT_REFRESH_SECRET="your-refresh-secret" ^
   xanxushu/always-backend:latest</code></pre>
               <ul class="inline-list">
-                <li>最快</li>
-                <li>最适合单机开发</li>
-                <li>真机和模拟器都方便测试</li>
+                <li>上手最快</li>
+                <li>适合单机开发</li>
+                <li>本机 PostgreSQL 直接复用</li>
               </ul>
             </article>
 
             <article class="deploy-card">
               <div class="card-head">
                 <span class="badge badge-muted">Shareable</span>
-                <h3>方式 B: Docker Compose 同时启动 backend + postgres</h3>
+                <h3>方式 B：Docker Compose 同时启动 backend + postgres</h3>
               </div>
               <p>
-                适合分享给同事、测试同学或者异地机器。整个栈一起起，
-                最不容易遗漏依赖和网络配置。
+                更适合给同事、测试同学或异地机器复用。整套依赖一起启动，
+                迁移和依赖关系更统一，也更不容易漏配。
               </p>
-              <pre><code>
-# 在项目根目录下创建 docker-compose.yml，内容如下：
-services:
+              <pre><code>services:
   postgres:
     image: postgres:16-bookworm
     restart: unless-stopped
@@ -186,7 +169,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
@@ -195,22 +178,19 @@ services:
     restart: unless-stopped
     depends_on:
       - postgres
-    env_file:
-      - .env.example
     environment:
       DATABASE_URL: postgresql://postgres:postgres@postgres:5432/always
-      PORT: 3000
+      JWT_ACCESS_SECRET: your-access-secret
+      JWT_REFRESH_SECRET: your-refresh-secret
     ports:
-      - '3000:3000'
+      - "3000:3000"
 
 volumes:
-  postgres-data:
-# 执行compose命令                
-docker compose up -d</code></pre>
+  postgres-data:</code></pre>
               <ul class="inline-list">
-                <li>最适合协作</li>
+                <li>更适合协作共享</li>
                 <li>数据库卷持久化</li>
-                <li>部署和迁移路径清晰</li>
+                <li>部署路径更稳定</li>
               </ul>
             </article>
           </div>
@@ -219,7 +199,7 @@ docker compose up -d</code></pre>
         <section class="section steps-section">
           <div class="section-heading">
             <p class="eyebrow">HOW TO RUN</p>
-            <h2>从拉镜像到真机联调的实际流程</h2>
+            <h2>从拉取镜像到真机联调，保持最短但完整的路径</h2>
           </div>
 
           <div class="timeline">
@@ -227,35 +207,35 @@ docker compose up -d</code></pre>
               <span class="timeline-index">1</span>
               <div>
                 <h3>拉取镜像</h3>
-                <p>使用 `docker pull xanxushu/always-backend:latest` 拉取后端镜像。</p>
+                <p>先拉取 `xanxushu/always-backend:latest`，确保拿到最新修复过 migration 的版本。</p>
               </div>
             </article>
             <article class="timeline-item">
               <span class="timeline-index">2</span>
               <div>
                 <h3>准备数据库</h3>
-                <p>可以选择本机 PostgreSQL、Compose 内 PostgreSQL，或者独立数据库容器。</p>
+                <p>可以用本机 PostgreSQL，也可以用独立 postgres 容器，关键是 `DATABASE_URL` 可连通。</p>
               </div>
             </article>
             <article class="timeline-item">
               <span class="timeline-index">3</span>
               <div>
                 <h3>传入环境变量</h3>
-                <p>至少要有 `DATABASE_URL`、`JWT_ACCESS_SECRET`、`JWT_REFRESH_SECRET`。变量多时建议用 `--env-file`。</p>
+                <p>至少要有 `DATABASE_URL`、`JWT_ACCESS_SECRET`、`JWT_REFRESH_SECRET`，变量多时建议用 `--env-file`。</p>
               </div>
             </article>
             <article class="timeline-item">
               <span class="timeline-index">4</span>
               <div>
                 <h3>启动容器并看日志</h3>
-                <p>用 `docker ps` 和 `docker logs` 确认后端已经监听到 `3000` 端口。</p>
+                <p>容器会先执行 `prisma migrate deploy`，确认日志里没有 pending error 后再联调客户端。</p>
               </div>
             </article>
             <article class="timeline-item">
               <span class="timeline-index">5</span>
               <div>
-                <h3>连接 Android</h3>
-                <p>真机用电脑局域网 IP，例如：192.168.x.x:3000。</p>
+                <h3>连接 Android 真机</h3>
+                <p>真机不要填 `localhost`，要填宿主机局域网 IP，例如 `192.168.x.x:3000`。</p>
               </div>
             </article>
           </div>
@@ -264,34 +244,64 @@ docker compose up -d</code></pre>
         <section class="section android-section" id="android">
           <div class="section-heading">
             <p class="eyebrow">ANDROID</p>
-            <h2>Android 应用说明</h2>
+            <h2>更接近真实客户端的页面展示</h2>
           </div>
 
           <div class="android-grid">
             <article class="phone-stage">
-              <div class="phone-frame">
-                <div class="phone-notch"></div>
-                <div class="phone-screen">
-                  <div class="mock-status">always</div>
-                  <div class="mock-card mock-card-large">
-                    <span>Relationship Sharing</span>
-                    <strong>Consent-first</strong>
-                    <p>status · location requests · timeline · summaries</p>
+              <div class="phone-frame phone-frame-app">
+                <div class="phone-screen phone-screen-app">
+                  <div class="app-header">
+                    <div class="app-logo">Always</div>
+                    <p class="app-lead">暂时还没有同步过的状态数据。</p>
+                    <span class="sync-chip">还没有同步数据</span>
                   </div>
-                  <div class="mock-row">
-                    <div class="mock-card">
-                      <span>Invite</span>
-                      <strong>Partner flow</strong>
+
+                  <section class="status-sheet">
+                    <p class="sheet-kicker">当前状态</p>
+                    <h3>尚未同步</h3>
+                    <p class="sheet-copy">目前还没有上传过共享状态数据。</p>
+
+                    <div class="status-pill-grid">
+                      <span class="status-pill">尚未同步</span>
+                      <span class="status-pill">电量未知</span>
+                      <span class="status-pill">网络未知</span>
+                      <span class="status-pill status-pill-wide">Wi-Fi 状态未知</span>
+                      <span class="status-pill">位置不可用</span>
                     </div>
-                    <div class="mock-card">
-                      <span>Safety</span>
-                      <strong>Revocable access</strong>
+
+                    <p class="status-note">尚未同步</p>
+
+                    <div class="sheet-card">
+                      <h4>通知中心</h4>
+                      <p>进入应用内通知中心, 查看最近同步过来的通知摘要。</p>
+                      <button class="ghost-button" type="button">查看详情</button>
                     </div>
-                  </div>
-                  <div class="mock-card mock-footer">
-                    <span>Backend</span>
-                    <strong>Dockerized · GitHub Pages ready</strong>
-                  </div>
+
+                    <div class="sheet-card sheet-card-muted">
+                      <h4>应用列表</h4>
+                      <p>只有在同意后，列表摘要才会同步，卡片样式与真实客户端保持统一。</p>
+                    </div>
+                  </section>
+
+                  <nav class="bottom-nav" aria-label="app navigation">
+                    <div class="nav-item nav-item-active">
+                      <div class="nav-icon nav-icon-home"></div>
+                      <span>首页</span>
+                    </div>
+                    <div class="nav-item">
+                      <div class="nav-icon nav-icon-line"></div>
+                      <span>时间线</span>
+                    </div>
+                    <div class="nav-item">
+                      <div class="nav-icon nav-icon-doc"></div>
+                      <span>总结</span>
+                    </div>
+                    <div class="nav-item">
+                      <div class="nav-icon nav-icon-user"></div>
+                      <span>我的</span>
+                    </div>
+                  </nav>
                 </div>
               </div>
             </article>
@@ -300,21 +310,21 @@ docker compose up -d</code></pre>
               <div class="glass-card">
                 <h3>Android 下载</h3>
                 <p>
-                  使用Android客户端，配置好后端地址，即可在任意Android设备上使用always。
+                  安装客户端后，填入你的后端地址和账号配置，就可以体验关系绑定、
+                  状态同步、时间线和总结等功能。
                 </p>
                 <div class="button-row">
                   <a class="button button-primary" href="#" data-download-link>APK 下载</a>
                 </div>
-                <p class="meta-note">
-                  最佳适用于Android 12+，低版本Android暂未经过测试。
-                </p>
+                <p class="meta-note">当前展示风格按你提供的客户端截图进行了重新拟合，整体更接近真实界面。</p>
               </div>
+
               <div class="glass-card checklist-card">
                 <h3>联调提示</h3>
                 <ul class="check-list">
-                  <li>真机使用电脑局域网 IP，不要填 `localhost`</li>
-                  <li>确认防火墙已放行 `3000` 端口</li>
-                  <li>确认 Docker 已发布 `-p 3000:3000`</li>
+                  <li>真机不要填 `localhost`，请填宿主机局域网 IP。</li>
+                  <li>确认防火墙已放行后端监听端口，例如 `3000`。</li>
+                  <li>如果换了镜像版本，建议先 `docker pull` 再重建容器。</li>
                 </ul>
               </div>
             </article>
@@ -324,7 +334,7 @@ docker compose up -d</code></pre>
         <section class="section notes-section" id="notes">
           <div class="section-heading">
             <p class="eyebrow">NOTES & THOUGHTS</p>
-            <h2>你的看法、路线判断和碎碎念，也应该是页面的一部分</h2>
+            <h2>项目说明不只是教程，也应该包含你的判断、想法与路线感</h2>
           </div>
 
           <div class="notes-grid">
@@ -332,24 +342,24 @@ docker compose up -d</code></pre>
               <p class="note-tag">Viewpoint</p>
               <h3>为什么要做 GitHub Pages</h3>
               <p>
-                因为 README 更像仓库内部说明，而公开页面更像一个对外窗口。
-                它能让第一次来到项目的人更快建立信任，也更容易理解“这个项目已经到哪一步了”。
+                README 更像仓库说明，GitHub Pages 更像项目门面。
+                它能更直观地告诉别人这个项目是什么、做到哪一步了，以及如何开始体验。
               </p>
             </article>
             <article class="note-card">
               <p class="note-tag">Product</p>
-              <h3>为什么页面不只放技术教程</h3>
+              <h3>为什么页面里要保留产品感</h3>
               <p>
-                一个好的项目主页应该既能讲清部署，也能讲清气质。
-                Android 展示、设计想法、取舍判断，本来就属于项目说明的一部分。
+                如果只有技术步骤，别人看见的是部署流程；如果还有界面、语气和设计，
+                别人看见的才是一个逐渐成形的产品。
               </p>
             </article>
             <article class="note-card">
               <p class="note-tag">Future</p>
-              <h3>以后还能继续加什么</h3>
+              <h3>后续还能继续加什么</h3>
               <p>
-                你后面完全可以继续加 Release Timeline、APK 更新记录、功能演示截图、
-                Roadmap、更新日志，甚至写一整段“我为什么想做这个产品”。
+                你后面可以继续补 APK 更新记录、Release Timeline、功能截图、
+                设计想法、Roadmap，甚至把自己的碎碎念写成长期更新栏目。
               </p>
             </article>
           </div>
@@ -358,7 +368,7 @@ docker compose up -d</code></pre>
     </div>
 
     <footer class="footer">
-      <p>Built by xanxushu · designed as an introductory page for always.</p>
+      <p>Built by xanxushu, shaped as the public-facing intro page for always.</p>
     </footer>
 
     <script type="module" src="./main.js"></script>
